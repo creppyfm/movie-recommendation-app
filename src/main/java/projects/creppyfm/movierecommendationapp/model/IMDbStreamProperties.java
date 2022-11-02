@@ -1,5 +1,7 @@
 package projects.creppyfm.movierecommendationapp.model;
 
+import java.net.URI;
+import java.net.http.HttpRequest;
 import java.util.Objects;
 
 public class IMDbStreamProperties {
@@ -8,15 +10,24 @@ public class IMDbStreamProperties {
     private final String genre;
     private final String description;
 
+    private final String urlCall = "https://api-fulfill.dataexchange.us-east-1.amazonaws.com/v1";
+
+
     public IMDbStreamProperties(String title, String rating, String genre, String description) {
         this.title = title;
         this.rating = rating;
         this.genre = genre;
         this.description = description;
+
     }
 
     public String getTitle() {
-        return title;
+        HttpRequest title = HttpRequest.newBuilder()
+                .uri(new URI(urlCall))
+                .header("Authorization", passKeyHere);
+
+        String titleReturn = title.toString();
+        return titleReturn;
     }
 
     public String getRating() {
